@@ -172,11 +172,11 @@ pub const Encoder = struct {
         try rc(inner_vtable.EncodeParameterSets.?(inner, &parameter_sets_bitstream));
 
         encoder.parameter_sets = blk: {
-            var parameter_sets = std.ArrayList(u8).init(allocator);
-            errdefer parameter_sets.deinit();
+            var parameter_sets: std.ArrayList(u8) = .empty;
+            errdefer parameter_sets.deinit(allocator);
 
-            try pump_bitstream_data(&parameter_sets_bitstream, parameter_sets.writer());
-            const parameter_sets_slice = try parameter_sets.toOwnedSlice();
+            try pump_bitstream_data(&parameter_sets_bitstream, parameter_sets.writer(allocator));
+            const parameter_sets_slice = try parameter_sets.toOwnedSlice(allocator);
 
             break :blk parameter_sets_slice;
         };

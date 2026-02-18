@@ -57,42 +57,39 @@ pub fn build(b: *std.Build) void {
 
     // Encoding with raw bindings example
 
-    const example_encode_rainbow_low_level = b.addExecutable(.{
-        .name = "example_encode_rainbow_low_level",
+    const example_encode_rainbow_low_level = b.addExecutable(.{ .name = "example_encode_rainbow_low_level", .root_module = b.createModule(.{
         .root_source_file = b.path("examples/encode_rainbow_low_level.zig"),
         .target = target,
         .optimize = optimize,
-    });
+    }) });
     example_encode_rainbow_low_level.root_module.addImport("openh264_bindings", openh264_bindings);
     b.installArtifact(example_encode_rainbow_low_level);
 
     // Encoding with Zig-friendly API example
 
-    const example_encode_rainbow = b.addExecutable(.{
-        .name = "example_encode_rainbow",
+    const example_encode_rainbow = b.addExecutable(.{ .name = "example_encode_rainbow", .root_module = b.createModule(.{
         .root_source_file = b.path("examples/encode_rainbow.zig"),
         .target = target,
         .optimize = optimize,
-    });
+    }) });
     example_encode_rainbow.root_module.addImport("openh264", openh264);
     b.installArtifact(example_encode_rainbow);
 
     // Decoding with Zig-friendly API example
 
-    const example_decode_rainbow = b.addExecutable(.{
-        .name = "example_decode_rainbow",
+    const example_decode_rainbow = b.addExecutable(.{ .name = "example_decode_rainbow", .root_module = b.createModule(.{
         .root_source_file = b.path("examples/decode_rainbow.zig"),
         .target = target,
         .optimize = optimize,
-    });
+    }) });
     example_decode_rainbow.root_module.addImport("openh264", openh264);
     b.installArtifact(example_decode_rainbow);
 
-    const test_suite = b.addTest(.{
+    const test_suite = b.addTest(.{ .root_module = b.createModule(.{
         .root_source_file = b.path("test.zig"),
         .target = target,
         .optimize = optimize,
-    });
+    }) });
     test_suite.root_module.addImport("openh264", openh264);
 
     const test_step = b.step("test", "Run tests");
@@ -106,10 +103,12 @@ fn addLibraryCommon(
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
 ) *std.Build.Step.Compile {
-    const lib = b.addStaticLibrary(.{
+    const lib = b.addLibrary(.{
         .name = "openh264_common",
-        .target = target,
-        .optimize = optimize,
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+        })
     });
 
     lib.linkLibC();
@@ -216,10 +215,12 @@ fn addLibraryProcessing(
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
 ) *std.Build.Step.Compile {
-    const lib = b.addStaticLibrary(.{
+    const lib = b.addLibrary(.{
         .name = "openh264_processing",
-        .target = target,
-        .optimize = optimize,
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+        })
     });
 
     lib.linkLibC();
@@ -321,10 +322,12 @@ fn addLibraryEncoder(
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
 ) *std.Build.Step.Compile {
-    const lib = b.addStaticLibrary(.{
+    const lib = b.addLibrary(.{
         .name = "openh264_encoder",
-        .target = target,
-        .optimize = optimize,
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+        })
     });
 
     lib.linkLibC();
@@ -459,10 +462,12 @@ fn addLibraryDecoder(
     target: std.Build.ResolvedTarget,
     optimize: std.builtin.OptimizeMode,
 ) *std.Build.Step.Compile {
-    const lib = b.addStaticLibrary(.{
+    const lib = b.addLibrary(.{
         .name = "openh264_decoder",
-        .target = target,
-        .optimize = optimize,
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+        })
     });
 
     lib.linkLibC();

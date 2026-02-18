@@ -19,7 +19,6 @@ pub fn main() !void {
 
     const file = try std.fs.cwd().createFile("rainbow.264", .{});
     defer file.close();
-    const writer = file.writer();
 
     var encoder = try openh264.Encoder.init(
         .{ .resolution = .{ .width = 1920, .height = 1080 } },
@@ -38,6 +37,6 @@ pub fn main() !void {
         @memset(frame.data.y, r.y);
         @memset(frame.data.u, r.u);
         @memset(frame.data.v, r.v);
-        try encoder.encode(&frame, writer);
+        try encoder.encode(&frame, file);
     }
 }

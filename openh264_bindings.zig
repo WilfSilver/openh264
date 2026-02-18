@@ -39,22 +39,22 @@ pub const ISVCEncoderVtbl = extern struct {
     /// @brief  Initialize the encoder
     /// @param  pParam  basic encoder parameter
     /// @return CM_RETURN: 0 - success; otherwise - failed;
-    Initialize: ?*const fn (?*ISVCEncoder, ?*const SEncParamBase) callconv(.C) c_int,
+    Initialize: ?*const fn (?*ISVCEncoder, ?*const SEncParamBase) callconv(.c) c_int,
 
     /// @brief  Initilaize encoder by using extension parameters.
     /// @param  pParam  extension parameter for encoder (NOTE: left out in bindings for now)
     /// @return CM_RETURN: 0 - success; otherwise - failed;
-    InitializeExt: ?*const fn (?*ISVCEncoder, ?*const anyopaque) callconv(.C) c_int,
+    InitializeExt: ?*const fn (?*ISVCEncoder, ?*const anyopaque) callconv(.c) c_int,
 
     /// @brief   Get the default extension parameters.
     ///          If you want to change some parameters of encoder, firstly you need to get the default encoding parameters,
     ///          after that you can change part of parameters you want to.
     /// @param   pParam  extension parameter for encoder (NOTE: left out in bindings for now)
     /// @return  CM_RETURN: 0 - success; otherwise - failed;
-    GetDefaultParams: ?*const fn (?*ISVCEncoder, ?*anyopaque) callconv(.C) c_int,
+    GetDefaultParams: ?*const fn (?*ISVCEncoder, ?*anyopaque) callconv(.c) c_int,
 
     /// uninitialize the encoder
-    Uninitialize: ?*const fn (?*ISVCEncoder) callconv(.C) c_int,
+    Uninitialize: ?*const fn (?*ISVCEncoder) callconv(.c) c_int,
 
     /// @brief Encode one frame
     /// @param kpSrcPic the pointer to the source luminance plane
@@ -64,27 +64,27 @@ pub const ISVCEncoderVtbl = extern struct {
     ///        the application calling this interface needs to ensure the data validation between the location
     /// @param pBsInfo output bit stream
     /// @return  0 - success; otherwise -failed;
-    EncodeFrame: ?*const fn (?*ISVCEncoder, ?*const SSourcePicture, ?*SFrameBSInfo) callconv(.C) c_int,
+    EncodeFrame: ?*const fn (?*ISVCEncoder, ?*const SSourcePicture, ?*SFrameBSInfo) callconv(.c) c_int,
 
     /// @brief  Encode the parameters from output bit stream
     /// @param  pBsInfo output bit stream
     /// @return 0 - success; otherwise - failed;
-    EncodeParameterSets: ?*const fn (?*ISVCEncoder, ?*SFrameBSInfo) callconv(.C) c_int,
+    EncodeParameterSets: ?*const fn (?*ISVCEncoder, ?*SFrameBSInfo) callconv(.c) c_int,
 
     /// @brief  Force encoder to encoder frame as IDR if bIDR set as true
     /// @param  bIDR true: force encoder to encode frame as IDR frame;false, return 1 and nothing to do
     /// @return 0 - success; otherwise - failed;
-    ForceIntraFrame: ?*const fn (?*ISVCEncoder, bool) callconv(.C) c_int,
+    ForceIntraFrame: ?*const fn (?*ISVCEncoder, bool) callconv(.c) c_int,
 
     /// @brief   Set option for encoder, detail option type, please refer to enumurate ENCODER_OPTION.
     /// @param   pOption option for encoder such as InDataFormat, IDRInterval, SVC Encode Param, Frame Rate, Bitrate,...
     /// @return  CM_RETURN: 0 - success; otherwise - failed;
-    SetOption: ?*const fn (?*ISVCEncoder, EncoderOption, ?*const anyopaque) callconv(.C) c_int,
+    SetOption: ?*const fn (?*ISVCEncoder, EncoderOption, ?*const anyopaque) callconv(.c) c_int,
 
     /// @brief   Get option for encoder, detail option type, please refer to enumurate ENCODER_OPTION.
     /// @param   pOption option for encoder such as InDataFormat, IDRInterval, SVC Encode Param, Frame Rate, Bitrate,...
     /// @return  CM_RETURN: 0 - success; otherwise - failed;
-    GetOption: ?*const fn (?*ISVCEncoder, EncoderOption, ?*anyopaque) callconv(.C) c_int,
+    GetOption: ?*const fn (?*ISVCEncoder, EncoderOption, ?*anyopaque) callconv(.c) c_int,
 };
 
 /// @brief   Create encoder
@@ -156,10 +156,10 @@ pub const ISVCDecoderVtbl = extern struct {
     /// @brief  Initilaize decoder
     /// @param  pParam  parameter for decoder
     /// @return 0 - success; otherwise - failed;
-    Initialize: ?*const fn (?*ISVCDecoder, ?*const SDecodingParam) callconv(.C) c_long,
+    Initialize: ?*const fn (?*ISVCDecoder, ?*const SDecodingParam) callconv(.c) c_long,
 
     /// Uninitialize the decoder
-    Uninitialize: ?*const fn (?*ISVCDecoder) callconv(.C) c_long,
+    Uninitialize: ?*const fn (?*ISVCDecoder) callconv(.c) c_long,
 
     /// @brief   Decode one frame
     /// @param   pSrc the h264 stream to be decoded
@@ -169,7 +169,7 @@ pub const ISVCDecoderVtbl = extern struct {
     /// @param   iWidth output width
     /// @param   iHeight output height
     /// @return  0 - success; otherwise -failed;
-    DecodeFrame: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, [*c][*c]u8, [*c]c_int, [*c]c_int, [*c]c_int) callconv(.C) DecodingState,
+    DecodeFrame: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, [*c][*c]u8, [*c]c_int, [*c]c_int, [*c]c_int) callconv(.c) DecodingState,
 
     /// @brief    For slice level DecodeFrameNoDelay() (4 parameters input),
     ///           whatever the function return value is, the output data
@@ -181,7 +181,7 @@ pub const ISVCDecoderVtbl = extern struct {
     /// @param   ppDst buffer pointer of decoded data (YUV)
     /// @param   pDstInfo information provided to API(width, height, etc.)
     /// @return  0 - success; otherwise -failed;
-    DecodeFrameNoDelay: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, [*c][*c]u8, [*c]SBufferInfo) callconv(.C) DecodingState,
+    DecodeFrameNoDelay: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, [*c][*c]u8, [*c]SBufferInfo) callconv(.c) DecodingState,
 
     /// @brief    For slice level DecodeFrame2() (4 parameters input),
     ///           whatever the function return value is, the output data
@@ -193,7 +193,7 @@ pub const ISVCDecoderVtbl = extern struct {
     /// @param   ppDst buffer pointer of decoded data (YUV)
     /// @param   pDstInfo information provided to API(width, height, etc.)
     /// @return  0 - success; otherwise -failed;
-    DecodeFrame2: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, [*c][*c]u8, [*c]SBufferInfo) callconv(.C) DecodingState,
+    DecodeFrame2: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, [*c][*c]u8, [*c]SBufferInfo) callconv(.c) DecodingState,
 
     /// @brief   This function gets a decoded ready frame remaining in buffers after the last frame has been decoded.
     /// Use GetOption with option DECODER_OPTION_NUM_OF_FRAMES_REMAINING_IN_BUFFER to get the number of frames remaining in buffers.
@@ -201,14 +201,14 @@ pub const ISVCDecoderVtbl = extern struct {
     /// @param   ppDst buffer pointer of decoded data (YUV)
     /// @param   pDstInfo information provided to API(width, height, etc.)
     /// @return  0 - success; otherwise -failed;
-    FlushFrame: ?*const fn (?*ISVCDecoder, [*c][*c]u8, [*c]SBufferInfo) callconv(.C) DecodingState,
+    FlushFrame: ?*const fn (?*ISVCDecoder, [*c][*c]u8, [*c]SBufferInfo) callconv(.c) DecodingState,
 
     /// @brief   This function parse input bitstream only, and rewrite possible SVC syntax to AVC syntax
     /// @param   pSrc the h264 stream to be decoded
     /// @param   iSrcLen the length of h264 stream
     /// @param   pDstInfo bit stream info
     /// @return  0 - success; otherwise -failed;
-    DecodeParser: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, ?*SParserBsInfo) callconv(.C) DecodingState,
+    DecodeParser: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, ?*SParserBsInfo) callconv(.c) DecodingState,
 
     /// @brief   This API does not work for now!! This is for future use to support non-I420 color format output.
     /// @param   pSrc the h264 stream to be decoded
@@ -220,17 +220,17 @@ pub const ISVCDecoderVtbl = extern struct {
     /// @param   iHeight output height
     /// @param   iColorFormat output color format
     /// @return  to do ...
-    DecodeFrameEx: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, [*c]u8, c_int, [*c]c_int, [*c]c_int, [*c]c_int, [*c]c_int) callconv(.C) DecodingState,
+    DecodeFrameEx: ?*const fn (?*ISVCDecoder, [*c]const u8, c_int, [*c]u8, c_int, [*c]c_int, [*c]c_int, [*c]c_int, [*c]c_int) callconv(.c) DecodingState,
 
     /// @brief   Set option for decoder, detail option type, please refer to enumurate DECODER_OPTION.
     /// @param   pOption  option for decoder such as OutDataFormat, Eos Flag, EC method, ...
     /// @return  CM_RETURN: 0 - success; otherwise - failed;
-    SetOption: ?*const fn (?*ISVCDecoder, DecoderOption, ?*const anyopaque) callconv(.C) c_long,
+    SetOption: ?*const fn (?*ISVCDecoder, DecoderOption, ?*const anyopaque) callconv(.c) c_long,
 
     /// @brief   Get option for decoder, detail option type, please refer to enumurate DECODER_OPTION.
     /// @param   pOption  option for decoder such as OutDataFormat, Eos Flag, EC method, ...
     /// @return  CM_RETURN: 0 - success; otherwise - failed;
-    GetOption: ?*const fn (?*ISVCDecoder, DecoderOption, ?*anyopaque) callconv(.C) c_long,
+    GetOption: ?*const fn (?*ISVCDecoder, DecoderOption, ?*anyopaque) callconv(.c) c_long,
 };
 
 /// @brief   Create decoder
@@ -261,7 +261,7 @@ pub extern fn WelsGetCodecVersion() OpenH264Version;
 /// @param   pVersion  struct to fill in with the version
 pub extern fn WelsGetCodecVersionEx(pVersion: ?*OpenH264Version) void;
 
-pub const WelsTraceCallback = ?*const fn (?*anyopaque, c_int, [*c]const u8) callconv(.C) void;
+pub const WelsTraceCallback = ?*const fn (?*anyopaque, c_int, [*c]const u8) callconv(.c) void;
 
 pub const WelsLogLevel = enum(u32) {
     quiet = 0,

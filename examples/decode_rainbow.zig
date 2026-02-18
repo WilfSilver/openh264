@@ -19,11 +19,11 @@ pub fn main() !void {
     var buffer = try allocator.alloc(u8, 4096);
     defer allocator.free(buffer);
 
-    var nal = std.ArrayList(u8).init(allocator);
-    defer nal.deinit();
+    var nal: std.ArrayList(u8) = .empty;
+    defer nal.deinit(allocator);
 
     while (true) {
-        const len = try file.reader().readAll(buffer);
+        const len = try file.readAll(buffer);
 
         var last_nal: usize = 0;
 
@@ -31,7 +31,7 @@ pub fn main() !void {
         for (0..len_range) |index| {
             if (std.mem.eql(u8, buffer[index .. index + 4], &.{ 0, 0, 0, 1 })) {
                 if (index - last_nal > 0) {
-                    nal.appendSlice(buffer[last_nal..index]) catch @panic("oom");
+                    nal.appendSlice(allocator, buffer[last_nal..index]) catch @panic("oom");
                 }
                 if (nal.items.len > 0) {
                     if (try decoder.decode(nal.items)) |frame| {
@@ -44,7 +44,7 @@ pub fn main() !void {
         }
 
         if (last_nal < len) {
-            nal.appendSlice(buffer[last_nal..len]) catch @panic("oom");
+            nal.appendSlice(allocator, buffer[last_nal..len]) catch @panic("oom");
         }
 
         if (len < buffer.len) break;

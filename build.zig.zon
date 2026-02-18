@@ -1,5 +1,5 @@
 .{
-    .name = "openh264",
+    .name = .openh264,
     .version = "2.5.0",
     .dependencies = .{
         .openh264 = .{
@@ -7,8 +7,8 @@
             .hash = "1220ffe1ffbd1a55bd014e2534671c55a95c5088c3783ad79dba92f7059fe0fc7bd8",
         },
         .nasm = .{
-            .url = "git+https://github.com/gerwin3/nasm.git#632a8dd5a378cdbaa2af15f9ee3ef80366bc59ac",
-            .hash = "1220dfe01455e01120746f0eefb29aad3404446b5541552f8b3fb6cf3d8ebc7bea99",
+            .url = "git+https://github.com/WilfSilver/nasm.git#f20808d2d4db792a0f980dda4c353e7c07f1ca38",
+            .hash = "nasm-2.16.1-4-J30Edw-yXAA7nefKnjDYv8WF_iZgGxCIZAmbaVDUuxdc",
         },
     },
     .paths = .{
@@ -21,4 +21,5 @@
         "openh264.zig",
         "openh264_bindings.zig",
     },
+    .fingerprint = 0x8f6f614264af2906,
 }
