@@ -1,7 +1,7 @@
 # OpenH264
 
 This is [OpenH264](https://github.com/cisco/openh264), packaged for
-[Zig](https://ziglang.org/).
+[Zig](https://ziglang.org/). Forked from [gerwin3/openh264](https://github.com/gerwin3/openh264), making it compatible with zig 0.15.2.
 
 ## Support
 
@@ -26,7 +26,7 @@ This is [OpenH264](https://github.com/cisco/openh264), packaged for
 First, update your `build.zig.zon`:
 
 ```bash
-zig fetch --save git+https://github.com/gerwin3/openh264.git
+zig fetch --save git+https://github.com/WilfSilver/openh264.git
 ```
 
 ### To use the Zig-friendly bindings
